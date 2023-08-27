@@ -81,6 +81,22 @@ From PortfolioProject..CovidDeaths
 Where continent is not null
 Order by 1, 2
 
+-- took the above query and added population to understand the realtion between population and death from COVID-19
+	
+Select Location, date, population, total_cases, total_deaths, DeathPercentage
+From PortfolioProject..CovidDeaths
+--Where location like '%states%'
+where continent is not null 
+order by 1,2
+
+--Wanted to see the country's with the highest infection rate based on population 
+	
+Select Location, Population,date, MAX(total_cases) as HighestInfectionCount,  Max((total_cases/population))*100 as PercentPopulationInfected
+From PortfolioProject..CovidDeaths
+--Where location like '%states%'
+Group by Location, Population, date
+order by PercentPopulationInfected desc
+
 
 -- Total Population vs Vaccinations
 -- Shows Percentage of Population that has recieved at least one Covid Vaccine
@@ -96,6 +112,7 @@ Order by 2,3
 
 
 -- Using CTE to perform calcultation on Partition By in previous query
+--This allows me to see a rolling number of how many vaccinations there are based on people infected.
 
 With PopvsVac (Continent, Location, Date, Population, New_Vaccinations, RollingPeopleVaccinated)
 as
