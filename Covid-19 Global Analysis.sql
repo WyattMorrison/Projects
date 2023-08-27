@@ -31,12 +31,14 @@ Where location like '%states%'
 Order by 1,2
 
 
--- Looking at Countries with Highest Infection Rate Compared to Population
-
-Select location, max(total_cases) as HighestInfectionCount, population, max((total_cases/population))*100 as "PercentPopulationInfected"
+-- Looking at Countries with Highest Infection Rate Compared to Population.
+-- This will give a good overview of which countries have the highest infection rate and a good comparison between countries based on the percentage of infected population.
+	
+Select Location, Population,date, MAX(total_cases) as HighestInfectionCount,  Max((total_cases/population))*100 as PercentPopulationInfected
 From PortfolioProject..CovidDeaths
-Group by location, population
-Order by PercentPopulationInfected desc
+--Where location like '%states%'
+Group by Location, Population, date
+order by PercentPopulationInfected desc
 
 
 -- Countries with Highest Death Count per Population
@@ -89,15 +91,7 @@ From PortfolioProject..CovidDeaths
 where continent is not null 
 order by 1,2
 
---Wanted to see the country's with the highest infection rate based on population 
 	
-Select Location, Population,date, MAX(total_cases) as HighestInfectionCount,  Max((total_cases/population))*100 as PercentPopulationInfected
-From PortfolioProject..CovidDeaths
---Where location like '%states%'
-Group by Location, Population, date
-order by PercentPopulationInfected desc
-
-
 -- Total Population vs Vaccinations
 -- Shows Percentage of Population that has recieved at least one Covid Vaccine
 
